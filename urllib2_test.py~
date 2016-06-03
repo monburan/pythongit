@@ -1,0 +1,5 @@
+import urllib2
+
+url = 'http://tool.chinaz.com/subdomain/'
+page = urllib2.openurl(url)
+print page.read()

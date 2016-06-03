@@ -1,0 +1,25 @@
+import urllib2
+from bs4 import BeautifulSoup
+import sys
+
+class Scaner():
+    
+    def geturl(self):
+        url = sys.argv[1]
+        if len (url and "://") == 0:
+            url = "http://" + url
+        request = urllib2.Request(url)
+        response = urllib2.urlopen(request)
+        soup = BeautifulSoup(response,'lxml')
+        print soup
+    def Spider(self,soup):
+        print soup
+        
+    def Main():
+        target = self.url()
+        print type(target)
+        self.Spider(target)
+
+if __name__ == "__main__":
+    pg = Scaner()
+    pg.geturl()

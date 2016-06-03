@@ -1,0 +1,10 @@
+i = 0
+rool = 1
+
+while rool == 1:
+    if i<100:
+        print i
+        i=i+1
+    if i>100:
+        print i
+        rool = 0

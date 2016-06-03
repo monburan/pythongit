@@ -1,0 +1,49 @@
+#coding:GB2312
+#__author__:monburan
+from pyDes import *
+from Tkinter import *
+import tkMessageBox
+
+class converter():
+    def __init__(self,monster):
+        dataframe = Frame(monster).grid(row = 0,column = 0)
+        Label(dataframe,text = "加密/解密的数据".decode("GB2312"),width = 15).grid(row = 0,sticky = E)
+        Entry(dataframe,textvariable = var1,width = 35).grid(row = 0,column = 1)
+        Label(dataframe,text = "请输入key".decode("GB2312"),width = 15).grid(row = 1,sticky = E)
+        Entry(dataframe,textvariable = var2,width = 35).grid(row = 1,column = 1)
+        Button(dataframe,text = "加密".decode("GB2312"),width = 10,command = lambda:self.DES_crypt("encode")).grid(row = 2,column = 0,sticky = W)
+        Button(dataframe,text = "解密".decode("GB2312"),width = 10,command = lambda:self.DES_crypt("decode")).grid(row = 2,column = 1,sticky = E)
+        Label(dataframe,text = "加密/解密的结果".decode("GB2312"),width = 15).grid(sticky = E)
+        Entry(dataframe,textvariable = var3,width = 35).grid(row = 3,column = 1)
+        Label(dataframe,text = "注意:key长度为8位".decode("GB2312"),width = 15).grid(row = 4,column = 0,sticky = W)
+        Button(dataframe,text="退出".decode("GB2312"),width = 10,bg = '#B22222',fg = '#F5F5F5',command=monster.quit).grid(row = 4,column = 1,sticky = E) 
+  
+    def DES_crypt(self,choice):
+        data = var1.get()
+        if len(data) == 0:
+            tkMessageBox.showerror("错误".decode("GB2312"),"请输入数据!".decode("GB2312"))
+        break
+        des_key = var2.get()
+        if len(des_key) == 0:
+            des_key = '00000000'
+        if len(des_key) < 8 or len(des_key) > 8:
+            tkMessageBox.showerror("错误".decode("GB2312"),"请输入8位key!".decode("GB2312"))
+        else:
+            des_key = var2.get()
+        k = des(des_key,CBC,"\0\0\0\0\0\0\0\0",pad = None,padmode = PAD_PKCS5)
+        if choice == "encode": 
+            en_result = k.encrypt(data)
+            var3.set(en_result.encode("hex"))
+        if choice == "decode":
+            de_result = k.decrypt(data.decode("hex"))
+            var3.set(de_result)
+
+if __name__ == "__main__":
+    win = Tk()
+    win.title("Des加密/解密 author:monburan".decode("GB2312"))
+    global var1,var2,var3
+    var1=StringVar()
+    var2=StringVar()
+    var3=StringVar()
+    app = converter(win)
+    win.mainloop()

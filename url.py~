@@ -1,0 +1,22 @@
+#author:monburan
+
+import linecache
+import re
+urllist = []
+iplist=[]
+
+for i in range(1,len(open("Layer.txt","r").readlines())+1):
+    line = linecache.getline("Layer.txt",i)
+    ip = re.compile('((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)',re.S)
+    if ip!=None:
+	remove_tab = re.sub("\t","",re.sub(ip,"",line))
+	remove_newline = re.sub("\n","",remove_tab)
+	urllist.append("http://" + remove_newline)
+        iplist.append((line.search(ip)).read())
+file1 = open("Url.txt","w")
+file2 = open("ip.txt","w")
+file1.writelines(urllist)
+file2.writelines(iplist)
+file1.close()
+file2.close()
+
